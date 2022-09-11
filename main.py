@@ -8,9 +8,9 @@ from aiogram.dispatcher import FSMContext
 
 from config import TOKEN
 
-from utils import db
-from utils import keyboard
-from utils.settings import Request_reg
+from utills import db
+from utills import keyboard
+from utills.settings import Request_reg
 
 loop = asyncio.get_event_loop()
 bot = Bot(TOKEN, parse_mode='html')
@@ -33,7 +33,7 @@ async def testing_features(message):
     TODO: DELETE IN  FUTURE
     """
     from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-    from utils import keyboard
+    from utills import keyboard
     print(keyboard.save_request)   
     await message.answer('TEST',reply_markup=keyboard.save_request)
 
@@ -59,7 +59,7 @@ async def edit_group_request(callback_query: types.CallbackQuery,state: FSMConte
 
 @dp.message_handler(content_types=['text'])
 async def text_buttons_func(message: types.Message, state: FSMContext):
-    uid = message.from_user.id
+    # uid = message.from_user.id
     if message.text == '➕Добавить позицию':
         await message.answer('К какой групе отнести позицию?', reply_markup=keyboard.groups)
         await Request_reg.group.set()
@@ -251,8 +251,8 @@ async def edit_count_request(callback_query: types.CallbackQuery,state: FSMConte
 
 
 if __name__== '__main__':
-    print('--------------------------------------------------')
-    db.init()
+    print('-'*30)
+    db.create_db()
     try:
         executor.start_polling(dp,skip_updates=True)
     except Exception as e:
