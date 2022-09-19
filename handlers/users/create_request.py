@@ -4,6 +4,7 @@ from aiogram.dispatcher import FSMContext
 from loader import dp
 
 from states import Request_reg
+from utils.db_api import db
 import keyboards
 
 @dp.message_handler(state=Request_reg.group)
@@ -76,7 +77,7 @@ async def yes_confirm_request(message: types.Message, state: FSMContext):
         state_name = data.get('name')
         state_L = data.get('L')
         state_count = data.get('count')    
-        # db.add(name=state_name,L=state_L,count=state_count,group=state_group)
+        db.add_request(group=state_group,name=state_name,Litres=state_L,count=state_count)
         
         await state.finish()
         await message.answer('Сохранил',reply_markup=keyboards.default.menu)

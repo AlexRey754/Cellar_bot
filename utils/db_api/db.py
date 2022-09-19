@@ -72,32 +72,28 @@
 
 # print(get_all())
 
+from urllib import request
 from sqlalchemy import create_engine
-from sqlalchemy import Column, Integer,String, ForeignKey
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import Column, Integer,String, ForeignKey, TIMESTAMP
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
 
-
-
-# from models.cellar import Cellar
 Base = declarative_base()
 
 class Cellar(Base):
     __tablename__ = 'cellar'
 
-    id = Column(Integer, primary_key=True)
-    uid = Column(Integer) # id пользователя
-    uid_name = Column(String) # Имя пользователя
+    id = Column(Integer, nullable=False, unique=True, primary_key=True, autoincrement=True)
     name = Column(String)
-    L = Column(Integer)
+    Litres = Column(Integer)
     count = Column(Integer)
     group = Column(String)
 
-    def __init__(self, name: str, L: int, count: int, group: str):
+    def __init__(self, name, Litres, count, group):
         self.name = name
-        self.L = L
-        self.count = count, 
+        self.Litres = Litres
+        self.count = count 
         self.group = group
 
     def __repr__(self):
@@ -109,13 +105,17 @@ class Cellar(Base):
         '''
         return info
 
-
-DATABASE_NAME = 'application.sqlite'
-engine = create_engine(f'sqlite:///{DATABASE_NAME}')
-
-# engine = create_engine('sqlite:///:memory:', echo=True)
+engine = create_engine('sqlite:///.\db.db', echo=True)
 Session = sessionmaker(bind=engine)
-
+session = Session()
 
 def create_db():
     Base.metadata.create_all(engine)
+
+def add_request(group, name, Litres, count):
+    request = Cellar(name=name, Litres=Litres, count=count, group=group)
+    session.add(request)
+    session.commit()
+
+def get_data():
+    pass
