@@ -17,5 +17,5 @@ cancel.row(KeyboardButton('❌Отмена'))
 
 confirm = ReplyKeyboardMarkup(True, True)
 confirm.row(KeyboardButton('✅Да'),KeyboardButton('❎Нет'))
-confirm.row(KeyboardButton('🖋Редактировать(not work)'))
-confirm.row(KeyboardButton('❌Отмена'))
+confirm.row(KeyboardButton('🖋Редактировать'))
+

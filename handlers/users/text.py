@@ -4,7 +4,7 @@ from aiogram.dispatcher import FSMContext
 from loader import dp
 from states import Request_reg
 import keyboards
-
+from utils.db_api import db
 
 @dp.message_handler(content_types=['text'])
 async def text_buttons_func(message: types.Message, state: FSMContext):
@@ -21,9 +21,8 @@ async def text_buttons_func(message: types.Message, state: FSMContext):
         pass
 
     elif message.text == '🗒Список':
-        pass
-        # text = db.get_all()
-        # message.answer(text)
+        text = db.get_data()
+        await message.answer(text)
 
     elif message.text == '⚙️Настройки':
         pass
