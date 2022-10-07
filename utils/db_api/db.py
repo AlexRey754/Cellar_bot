@@ -42,14 +42,6 @@ def add_request(group, name, Litres, count):
     session.add(request)
     session.commit()
 
-# def check_len_value(id,value,is_name=False,is_Litres=False,is_count=False,is_group=False):
-#     """Возвращает столбец определенной длинны"""
-#     request = session.query(Cellar).filter(Cellar.id == id).one()
-#     for data in request:
-#         if is_name:
-#             if len(data.name) == 6:
-                
-
 def get_data():
     request = session.query(Cellar).all()
     name_field = '       Название       '
